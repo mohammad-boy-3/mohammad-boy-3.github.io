@@ -1,1 +1,52 @@
+body {
+  font-family: sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 
+.navbar {
+  display: flex;
+  justify-content: center;
+  background-color: #ddd;
+  padding: 10px;
+}
+
+.navbar button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.page {
+  display: none;
+  padding: 30px;
+}
+
+.page:not(.hidden) {
+  display: block;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 60%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
