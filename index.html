@@ -3,57 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>درباره من</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Vazirmatn", sans-serif;
-      background: linear-gradient(to right, #fef6f9, #e7f6ff);
-      color: #444;
-      text-align: center;
-    }
-    header {
-      background-color: #ffd5ec;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    main {
-      padding: 20px;
-    }
-    img {
-      width: 180px;
-      border-radius: 20px;
-      margin-top: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 25px;
-      background-color: #ffa4c5;
-      color: white;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: 40px;
-      padding: 10px;
-      background-color: #eee;
-      font-size: 14px;
-    }
-  </style>
+  <title>سایت من</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <header>سلام! من محمد هستم 💫</header>
+  <nav class="navbar">
+    <button onclick="showPage('home')">
+      🏠 <span>صفحه‌ی اصلی</span>
+    </button>
+    <button onclick="showPage('profile')">
+      👤 <span>پروفایل</span>
+    </button>
+    <button onclick="showPage('register')">
+      📝 <span>ثبت‌نام</span>
+    </button>
+  </nav>
+
   <main>
-    <p>به سایت شخصی من خوش اومدی! اینجا درباره‌ی من و علاقه‌هام می‌تونی بخونی.</p>
-    <img src="https://placekitten.com/300/300" alt="گربه کیوت" />
-    <p>من به برنامه‌نویسی، طراحی و گربه‌ها علاقه دارم!</p>
-    <a class="btn" href="#contact">ارتباط با من</a>
+    <section id="home" class="page">خوش آمدید به سایت من</section>
+
+    <section id="register" class="page hidden">
+      <h2>فرم ثبت‌نام</h2>
+      <input type="text" id="name" placeholder="نام شما" />
+      <input type="email" id="email" placeholder="ایمیل شما" />
+      <input type="password" id="password" placeholder="رمز عبور" />
+      <button onclick="startRegistration()">مرحله بعد</button>
+    </section>
+
+    <section id="verify" class="page hidden">
+      <h2>تایید ایمیل</h2>
+      <p>رمز ارسال‌شده را وارد کنید:</p>
+      <input type="text" id="codeInput" />
+      <button onclick="verifyCode()">تایید</button>
+    </section>
+
+    <section id="profile" class="page hidden">
+      <h2>پروفایل شما</h2>
+      <div id="profileInfo"></div>
+    </section>
+
+    <section id="error" class="page hidden">
+      <h3 id="errorMsg"></h3>
+    </section>
   </main>
-  <footer>ساخته شده با ❤️ توسط من</footer>
 </body>
 </html>
