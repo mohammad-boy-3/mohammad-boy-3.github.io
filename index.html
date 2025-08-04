@@ -4,47 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>سایت من</title>
+  <!-- Font Awesome برای آیکون‌ها -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
+  <!-- ناوبری سه‌گانه -->
   <nav class="navbar">
-    <button onclick="showPage('home')">
-      🏠 <span>صفحه‌ی اصلی</span>
+    <button onclick="showPage('home')" id="btn-home">
+      <i class="fas fa-house"></i>
+      <span>صفحه‌ی اصلی</span>
     </button>
-    <button onclick="showPage('profile')">
-      👤 <span>پروفایل</span>
+    <button onclick="showPage('profile')" id="btn-profile">
+      <i class="fas fa-user"></i>
+      <span>پروفایل</span>
     </button>
-    <button onclick="showPage('register')">
-      📝 <span>ثبت‌نام</span>
+    <button onclick="showPage('register')" id="btn-register">
+      <i class="fas fa-pen"></i>
+      <span>ثبت‌نام</span>
     </button>
   </nav>
 
   <main>
-    <section id="home" class="page">خوش آمدید به سایت من</section>
-
-    <section id="register" class="page hidden">
-      <h2>فرم ثبت‌نام</h2>
-      <input type="text" id="name" placeholder="نام شما" />
-      <input type="email" id="email" placeholder="ایمیل شما" />
-      <input type="password" id="password" placeholder="رمز عبور" />
-      <button onclick="startRegistration()">مرحله بعد</button>
+    <!-- صفحه‌ی اصلی -->
+    <section id="home" class="page">
+      <h1>🏠 خوش آمدید!</h1>
+      <p>این صفحه‌ی اصلی سایت شماست.</p>
     </section>
 
+    <!-- ثبت‌نام -->
+    <section id="register" class="page hidden">
+      <h2>ثبت‌نام</h2>
+      <div class="form-group">
+        <label for="name"><i class="fas fa-id-badge"></i> نام:</label>
+        <input type="text" id="name" />
+      </div>
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> ایمیل:</label>
+        <input type="email" id="email" />
+      </div>
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> رمز عبور:</label>
+        <input type="password" id="password" />
+      </div>
+      <button class="btn-action" onclick="startRegistration()">مرحله بعد</button>
+    </section>
+
+    <!-- تایید کد -->
     <section id="verify" class="page hidden">
       <h2>تایید ایمیل</h2>
-      <p>رمز ارسال‌شده را وارد کنید:</p>
-      <input type="text" id="codeInput" />
-      <button onclick="verifyCode()">تایید</button>
+      <div class="form-group">
+        <label for="codeInput"><i class="fas fa-key"></i> کد:</label>
+        <input type="text" id="codeInput" />
+      </div>
+      <button class="btn-action" onclick="verifyCode()">تایید</button>
     </section>
 
+    <!-- پروفایل -->
     <section id="profile" class="page hidden">
-      <h2>پروفایل شما</h2>
-      <div id="profileInfo"></div>
+      <h2><i class="fas fa-user-circle"></i> پروفایل شما</h2>
+      <div id="profileInfo" class="profile-info"></div>
     </section>
 
+    <!-- خطا -->
     <section id="error" class="page hidden">
-      <h3 id="errorMsg"></h3>
+      <div class="error-box">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorMsg"></span>
+      </div>
     </section>
   </main>
 </body>
