@@ -29,11 +29,7 @@ function startRegistration() {
   const name     = document.getElementById('name').value.trim();
   const email    = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
-
-  if (!name || !email || !password) {
-    alert("لطفا همهٔ فیلدها را پر کنید.");
-    return;
-  }
+  if (!name || !email || !password) return alert("لطفا همهٔ فیلدها را پر کنید.");
 
   userData = { name, email, password };
 
@@ -42,14 +38,25 @@ function startRegistration() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'sendCode', email })
   })
-  .then(res => res.json())
+  .then(res => {
+    console.log("HTTP status:", res.status, res.statusText);
+    return res.text().then(text => {
+      console.log("Response body:", text);
+      try {
+        return JSON.parse(text);
+      } catch(e) {
+        throw new Error("Invalid JSON: " + text);
+      }
+    });
+  })
   .then(data => {
-    userCode = data.code;        // کد دریافتی از سرور
-    showPage('verify');          // نمایش صفحهٔ وارد کردن کد
+    if (!data.code) throw new Error("No code in response");
+    userCode = data.code;
+    showPage('verify');
   })
   .catch(err => {
-    console.error(err);
-    alert("ارسال کد به ایمیل با خطا مواجه شد.");
+    console.error("Error in sendCode:", err);
+    alert("ارسال کد به ایمیل با خطا مواجه شد:\n" + err.message);
   });
 }
 
