@@ -1,79 +1,132 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>سایت من</title>
-  <!-- Font Awesome برای آیکون‌ها -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="app.js" defer></script>
+  <meta charset="UTF-8">
+  <title>فرم ثبت‌نام</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    #logout {
+      background: crimson;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <!-- ناوبری سه‌گانه -->
-  <nav class="navbar">
-    <button onclick="showPage('home')" id="btn-home">
-      <i class="fas fa-house"></i>
-      <span>صفحه‌ی اصلی</span>
-    </button>
-    <button onclick="showPage('profile')" id="btn-profile">
-      <i class="fas fa-user"></i>
-      <span>پروفایل</span>
-    </button>
-    <button onclick="showPage('register')" id="btn-register">
-      <i class="fas fa-pen"></i>
-      <span>ثبت‌نام</span>
-    </button>
-  </nav>
 
-  <main>
-    <!-- صفحه‌ی اصلی -->
-    <section id="home" class="page">
-      <h1>🏠 خوش آمدید!</h1>
-      <p>این صفحه‌ی اصلی سایت شماست.</p>
-    </section>
-
-    <!-- ثبت‌نام -->
-    <section id="register" class="page hidden">
+  <div id="register" class="page">
+    <div class="container">
       <h2>ثبت‌نام</h2>
-      <div class="form-group">
-        <label for="name"><i class="fas fa-id-badge"></i> نام:</label>
-        <input type="text" id="name" />
-      </div>
-      <div class="form-group">
-        <label for="email"><i class="fas fa-envelope"></i> ایمیل:</label>
-        <input type="email" id="email" />
-      </div>
-      <div class="form-group">
-        <label for="password"><i class="fas fa-lock"></i> رمز عبور:</label>
-        <input type="password" id="password" />
-      </div>
-      <button class="btn-action" onclick="startRegistration()">مرحله بعد</button>
-    </section>
+      <input type="text" id="name" placeholder="نام شما">
+      <input type="email" id="email" placeholder="ایمیل شما">
+      <button onclick="startRegistration()">ثبت‌نام</button>
+    </div>
+  </div>
 
-    <!-- تایید کد -->
-    <section id="verify" class="page hidden">
-      <h2>تایید ایمیل</h2>
-      <div class="form-group">
-        <label for="codeInput"><i class="fas fa-key"></i> کد:</label>
-        <input type="text" id="codeInput" />
-      </div>
-      <button class="btn-action" onclick="verifyCode()">تایید</button>
-    </section>
+  <div id="main" class="page">
+    <div class="container">
+      <h2>خوش آمدید!</h2>
+      <p>نام شما: <span id="profile-name"></span></p>
+      <p>ایمیل شما: <span id="profile-email"></span></p>
+      <button id="logout" onclick="logout()">خروج</button>
+    </div>
+  </div>
 
-    <!-- پروفایل -->
-    <section id="profile" class="page hidden">
-      <h2><i class="fas fa-user-circle"></i> پروفایل شما</h2>
-      <div id="profileInfo" class="profile-info"></div>
-    </section>
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwLkJ2Cd7AuivD7i9eZKxnFwiiV9BrlPK4NptK46I2BpCFoYUv6P6HNHgk41dnEaYDMEA/exec";
 
-    <!-- خطا -->
-    <section id="error" class="page hidden">
-      <div class="error-box">
-        <i class="fas fa-exclamation-triangle"></i>
-        <span id="errorMsg"></span>
-      </div>
-    </section>
-  </main>
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    }
+
+    function startRegistration() {
+      const email = document.getElementById("email").value.trim();
+      const name = document.getElementById("name").value.trim();
+
+      if (!email || !name) {
+        alert("لطفاً همه فیلدها را پر کنید");
+        return;
+      }
+
+      const formData = new URLSearchParams();
+      formData.append("email", email);
+      formData.append("name", name);
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userName", name);
+        showProfile();
+      })
+      .catch(error => {
+        alert("خطا در ارسال اطلاعات");
+        console.error("Error:", error);
+      });
+    }
+
+    function showProfile() {
+      const email = localStorage.getItem("userEmail");
+      const name = localStorage.getItem("userName");
+
+      if (!email || !name) {
+        showPage("register");
+      } else {
+        document.getElementById("profile-name").textContent = name;
+        document.getElementById("profile-email").textContent = email;
+        showPage("main");
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userName");
+      showPage("register");
+    }
+
+    // نمایش صحیح در شروع
+    window.onload = showProfile;
+  </script>
+
 </body>
 </html>
