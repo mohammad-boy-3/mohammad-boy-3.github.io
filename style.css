@@ -1,84 +1,75 @@
 /* Reset */
-* { box-sizing: border-box; margin:0; padding:0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* بدنه */
+/* ساختار کلی */
 body {
+  display: flex; flex-direction: column;
+  min-height: 100vh;
   font-family: "Vazirmatn", sans-serif;
   background: #f0f4f8;
   color: #333;
-  display: flex; flex-direction: column;
-  min-height: 100vh;
+  direction: rtl;
 }
-
-/* ناوبری */
-.navbar {
-  display: flex;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.navbar { display: flex; }
 .navbar button {
-  flex:1; padding:15px;
-  background:none; border:none;
-  font-size:1.1rem; cursor:pointer;
+  flex: 1; padding: 15px;
+  background: none; border: none;
+  font-size: 1.1rem; cursor: pointer;
   transition: background .2s;
 }
-.navbar button:hover {
-  background: #e2e8f0;
-}
+.navbar button:hover,
 .navbar button.active {
   background: #5c6bc0;
   color: #fff;
 }
 
-/* محتوا */
-main { flex:1; padding:20px; }
-.tab-content { display:none; animation:fadeIn .3s ease; }
-.tab-content.active { display:block; }
+/* Main */
+main { flex: 1; padding: 20px; }
+.tab-content { display: none; animation: fadeIn .3s ease; }
+.tab-content.active { display: block; }
 
-/* تاریخ */
+/* نمایش تاریخ */
 .date-display {
-  display:flex; justify-content:space-around;
-  margin-bottom:20px; font-size:1.1rem;
+  display: flex; justify-content: space-around;
+  margin-bottom: 20px; font-size: 1.1rem;
 }
 .month-grid {
-  display:grid;
-  grid-template-columns: repeat(7,1fr);
-  gap:5px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
 }
 .month-grid .day {
-  background:#fff; padding:10px;
-  border-radius:6px; text-align:center;
-  position:relative;
+  background: #fff; padding: 10px;
+  border-radius: 6px; text-align: center;
+  position: relative;
 }
 .month-grid .day.today {
-  border:2px solid #5c6bc0;
+  border: 2px solid #5c6bc0;
 }
-.month-grid .day .sticker {
-  position:absolute; top:5px; right:5px;
-  width:16px; height:16px;
+
+/* استیکر */
+.month-grid .day img {
+  position: absolute; top: 4px; right: 4px;
+  width: 16px; height: 16px;
 }
 
 /* ساعت */
 .clocks {
-  display:flex; justify-content:space-around; flex-wrap:wrap;
-  gap:20px;
+  display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
 }
 .clock-card {
-  background:#fff; padding:20px; border-radius:8px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:center;
-  width:120px;
+  background: #fff; padding: 20px; border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center;
+  width: 120px;
 }
-.time-display {
-  font-size:1.4rem; margin-top:10px;
-  font-weight:bold;
-}
+.time-display { font-size: 1.4rem; margin-top: 10px; font-weight: bold; }
 
 /* فوتر */
 footer {
-  text-align:center; padding:10px;
-  background: #333; color:#fff;
-  font-size:0.9rem;
+  text-align: center; padding: 10px;
+  background: #333; color: #fff; font-size: 0.9rem;
 }
 
 /* انیمیشن */
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
