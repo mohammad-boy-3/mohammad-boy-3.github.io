@@ -1,106 +1,35 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>تقویم و ساعت</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقویم و ساعت زیبا</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <button data-tab="calendar" class="active">📅 تقویم</button>
-      <button data-tab="clock">🕒 ساعت</button>
+    <nav>
+        <ul>
+            <li><a href="#calendar">تقویم</a></li>
+            <li><a href="#clock">ساعت</a></li>
+        </ul>
     </nav>
-  </header>
-  <main>
-    <section id="calendar" class="tab-content active">
-      <div class="date-display">
-        <div>شمسی: <span id="shamsi"></span></div>
-        <div>میلادی: <span id="miladi"></span></div>
-        <div>قمری: <span id="ghemeri"></span></div>
-      </div>
-      <div id="month-grid" class="month-grid"></div>
+    <section id="calendar">
+        <h2>تقویم</h2>
+        <img src="sticker1.png" alt="Sticker" class="sticker">
+        <!-- Calendar component will be inserted here -->
     </section>
-    <section id="clock" class="tab-content">
-      <div class="clocks">
-        <div class="clock-card">
-          <h3>تهران</h3>
-          <div id="time-IR" class="time-display"></div>
-        </div>
-        <div class="clock-card">
-          <h3>لندن</h3>
-          <div id="time-UK" class="time-display"></div>
-        </div>
-        <div class="clock-card">
-          <h3>توکیو</h3>
-          <div id="time-JP" class="time-display"></div>
-        </div>
-      </div>
+    <section id="clock">
+        <h2>ساعت</h2>
+        <img src="sticker2.png" alt="Sticker" class="sticker">
+        <p>تهران: <span id="tehran-time"></span></p>
+        <p>لندن: <span id="london-time"></span></p>
+        <p>توکیو: <span id="tokyo-time"></span></p>
     </section>
-  </main>
-  <footer>
-    این وب‌سایت بر اثر تلاش‌های  
-    <strong>محمد سلیمانی اهل قم</strong>  
-    به وجود آمده
-  </footer>
-
-  <!-- کتابخانه‌ی تبدیل شمسی -->
-  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/index.min.js"></script>
-  <!-- اسکریپت ما -->
-  <script type="module" src="app.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>تقویم و ساعت</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <nav class="navbar">
-      <button data-tab="calendar" class="active">📅 تقویم</button>
-      <button data-tab="clock">🕒 ساعت</button>
-    </nav>
-  </header>
-  <main>
-    <section id="calendar" class="tab-content active">
-      <div class="date-display">
-        <div>شمسی: <span id="shamsi"></span></div>
-        <div>میلادی: <span id="miladi"></span></div>
-        <div>قمری: <span id="ghemeri"></span></div>
-      </div>
-      <div id="month-grid" class="month-grid"></div>
-    </section>
-    <section id="clock" class="tab-content">
-      <div class="clocks">
-        <div class="clock-card">
-          <h3>تهران</h3>
-          <div id="time-IR" class="time-display"></div>
-        </div>
-        <div class="clock-card">
-          <h3>لندن</h3>
-          <div id="time-UK" class="time-display"></div>
-        </div>
-        <div class="clock-card">
-          <h3>توکیو</h3>
-          <div id="time-JP" class="time-display"></div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer>
-    این وب‌سایت بر اثر تلاش‌های  
-    <strong>محمد سلیمانی اهل قم</strong>  
-    به وجود آمده
-  </footer>
-
-  <!-- کتابخانه‌ی تبدیل شمسی -->
-  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/index.min.js"></script>
-  <!-- اسکریپت ما -->
-  <script type="module" src="app.js"></script>
+    <footer>
+        <p>این وب سایت بر اثر تلاش های محمد سلیمانی اهل قم به وجود آمده.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
