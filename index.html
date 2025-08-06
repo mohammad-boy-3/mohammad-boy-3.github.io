@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>خانه | سایت من</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <title>تقویم و ساعت</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- ناوبری -->
   <header>
     <nav class="navbar">
-      <a href="index.html" class="logo">🏠 خانه</a>
-      <div class="nav-links">
-        <a href="register.html"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
-        <a href="profile.html" id="nav-profile"><i class="fas fa-user-circle"></i> پروفایل</a>
-      </div>
+      <button id="tab-calendar" class="active">📅 تقویم</button>
+      <button id="tab-clock">🕒 ساعت</button>
     </nav>
   </header>
 
-  <main class="container">
-    <h1>خوش آمدید!</h1>
-    <p>برای استفاده از امکانات سایت، لطفاً ثبت‌نام کنید یا وارد حساب کاربری‌تان شوید.</p>
+  <!-- محتوا -->
+  <main>
+    <!-- صفحهٔ تقویم -->
+    <section id="calendar" class="tab-content active">
+      <div class="date-display">
+        <div>شمسی: <span id="shamsi"></span></div>
+        <div>میلادی: <span id="miladi"></span></div>
+        <div>قمری: <span id="ghemeri"></span></div>
+      </div>
+      <div id="month-grid" class="month-grid"></div>
+    </section>
+
+    <!-- صفحهٔ ساعت -->
+    <section id="clock" class="tab-content">
+      <div class="clocks">
+        <div class="clock-card">
+          <h3>تهران</h3>
+          <div id="time-IR" class="time-display"></div>
+        </div>
+        <div class="clock-card">
+          <h3>لندن</h3>
+          <div id="time-UK" class="time-display"></div>
+        </div>
+        <div class="clock-card">
+          <h3>توکیو</h3>
+          <div id="time-JP" class="time-display"></div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <!-- پنل پایین -->
+  <footer>
+    این وب‌سایت بر اثر تلاش‌های  
+    <strong>محمد سلیمانی اهل قم</strong>  
+    به وجود آمده
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jalaali-js/1.1.0/jalaali.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
