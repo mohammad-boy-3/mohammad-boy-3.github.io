@@ -1,36 +1,123 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقویم و ساعت زیبا</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تقویم و ساعت فانتزی</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      direction: rtl;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: url('https://cdn.pixabay.com/photo/2020/09/07/11/54/bench-5551456_1280.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      border-bottom: 4px solid #ffcc00;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .card {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1rem;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+    .label {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #ffcc00;
+    }
+    .output {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      font-size: 1rem;
+      border-top: 2px solid #ffcc00;
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#calendar">تقویم</a></li>
-            <li><a href="#clock">ساعت</a></li>
-        </ul>
-    </nav>
-    <section id="calendar">
-        <h2>تقویم</h2>
-        <img src="sticker1.png" alt="Sticker" class="sticker">
-        <!-- Calendar component will be inserted here -->
-    </section>
-    <section id="clock">
-        <h2>ساعت</h2>
-        <img src="sticker2.png" alt="Sticker" class="sticker">
-        <p>تهران: <span id="tehran-time"></span></p>
-        <p>لندن: <span id="london-time"></span></p>
-        <p>توکیو: <span id="tokyo-time"></span></p>
-    </section>
-    <footer>
-        <p>این وب سایت بر اثر تلاش های محمد سلیمانی اهل قم به وجود آمده.</p>
-    </footer>
-    <script src="script.js"></script>
+  <header>ساعت و تقویم فانتزی</header>
+
+  <div class="container">
+    <div class="card">
+      <div class="label">زمان فعلی:</div>
+      <div class="output" id="clock">در حال بارگذاری...</div>
+    </div>
+    <div class="card">
+      <div class="label">تاریخ میلادی:</div>
+      <div class="output" id="gregorian">در حال بارگذاری...</div>
+    </div>
+    <div class="card">
+      <div class="label">تاریخ شمسی:</div>
+      <div class="output" id="jalali">در حال بارگذاری...</div>
+    </div>
+    <div class="card">
+      <div class="label">تاریخ قمری:</div>
+      <div class="output" id="hijri">در حال بارگذاری...</div>
+    </div>
+  </div>
+
+  <footer>
+    طراحی شده با عشق توسط محمد سلیمانی اهل قم
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/dist/jalaali.min.js"></script>
+  <script>
+    const clockEl = document.getElementById('clock');
+    const gregorianEl = document.getElementById('gregorian');
+    const jalaliEl = document.getElementById('jalali');
+    const hijriEl = document.getElementById('hijri');
+
+    function updateDateTime() {
+      const now = new Date();
+
+      // ساعت
+      clockEl.innerText = now.toLocaleTimeString('fa-IR');
+
+      // تاریخ میلادی
+      gregorianEl.innerText = now.toLocaleDateString('fa-IR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      // تاریخ شمسی
+      const j = window.jalaali.toJalaali(now);
+      const jDate = `${j.jy}/${j.jm.toString().padStart(2, '0')}/${j.jd.toString().padStart(2, '0')}`;
+      jalaliEl.innerText = jDate;
+
+      // تاریخ قمری (تخمینی)
+      hijriEl.innerText = new Intl.DateTimeFormat('fa-TN-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(now);
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
 </body>
 </html>
-
