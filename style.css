@@ -1,75 +1,81 @@
-/* Reset */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ساختار کلی */
 body {
-  display: flex; flex-direction: column;
-  min-height: 100vh;
-  font-family: "Vazirmatn", sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  direction: rtl;
-}
-header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.navbar { display: flex; }
-.navbar button {
-  flex: 1; padding: 15px;
-  background: none; border: none;
-  font-size: 1.1rem; cursor: pointer;
-  transition: background .2s;
-}
-.navbar button:hover,
-.navbar button.active {
-  background: #5c6bc0;
-  color: #fff;
+    font-family: 'Vazirmatn', sans-serif;
+    background: linear-gradient(to right, #ff0000, #ff9900, #33cc33, #3399ff, #cc33cc);
+    margin: 0;
+    padding: 0;
 }
 
-/* Main */
-main { flex: 1; padding: 20px; }
-.tab-content { display: none; animation: fadeIn .3s ease; }
-.tab-content.active { display: block; }
-
-/* نمایش تاریخ */
-.date-display {
-  display: flex; justify-content: space-around;
-  margin-bottom: 20px; font-size: 1.1rem;
-}
-.month-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-.month-grid .day {
-  background: #fff; padding: 10px;
-  border-radius: 6px; text-align: center;
-  position: relative;
-}
-.month-grid .day.today {
-  border: 2px solid #5c6bc0;
+nav {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
 
-/* استیکر */
-.month-grid .day img {
-  position: absolute; top: 4px; right: 4px;
-  width: 16px; height: 16px;
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
-/* ساعت */
-.clocks {
-  display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
+nav ul li {
+    margin: 0 20px;
 }
-.clock-card {
-  background: #fff; padding: 20px; border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center;
-  width: 120px;
-}
-.time-display { font-size: 1.4rem; margin-top: 10px; font-weight: bold; }
 
-/* فوتر */
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav a:hover {
+    color: #ff69b4;
+}
+
+section {
+    padding: 40px;
+    text-align: center;
+    min-height: 400px;
+}
+
+.sticker {
+    width: 100px;
+    position: absolute;
+    transition: transform 0.3s;
+}
+
+.sticker:hover {
+    transform: scale(1.2);
+}
+
+#calendar .sticker {
+    top: 20px;
+    left: 20px;
+}
+
+#clock .sticker {
+    top: 20px;
+    right: 20px;
+}
+
+h2 {
+    color: #ff69b4;
+    font-size: 28px;
+}
+
+p {
+    color: #333;
+    font-size: 20px;
+}
+
 footer {
-  text-align: center; padding: 10px;
-  background: #333; color: #fff; font-size: 0.9rem;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
-
-/* انیمیشن */
-@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
