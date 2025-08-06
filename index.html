@@ -4,21 +4,16 @@
   <meta charset="UTF-8">
   <title>تقویم و ساعت</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="icon" href="https://raw.githubusercontent.com/mohammad-boy-3/mohammad-boy-3.github.io/refs/heads/main/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ناوبری -->
   <header>
     <nav class="navbar">
-      <button id="tab-calendar" class="active">📅 تقویم</button>
-      <button id="tab-clock">🕒 ساعت</button>
+      <button data-tab="calendar" class="active">📅 تقویم</button>
+      <button data-tab="clock">🕒 ساعت</button>
     </nav>
   </header>
-
-  <!-- محتوا -->
   <main>
-    <!-- صفحهٔ تقویم -->
     <section id="calendar" class="tab-content active">
       <div class="date-display">
         <div>شمسی: <span id="shamsi"></span></div>
@@ -27,8 +22,6 @@
       </div>
       <div id="month-grid" class="month-grid"></div>
     </section>
-
-    <!-- صفحهٔ ساعت -->
     <section id="clock" class="tab-content">
       <div class="clocks">
         <div class="clock-card">
@@ -46,17 +39,68 @@
       </div>
     </section>
   </main>
-
-  <!-- پنل پایین -->
   <footer>
     این وب‌سایت بر اثر تلاش‌های  
     <strong>محمد سلیمانی اهل قم</strong>  
     به وجود آمده
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jalaali-js/1.1.0/jalaali.min.js"></script>
-  <script src="app.js"></script>
+  <!-- کتابخانه‌ی تبدیل شمسی -->
+  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/index.min.js"></script>
+  <!-- اسکریپت ما -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>تقویم و ساعت</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <button data-tab="calendar" class="active">📅 تقویم</button>
+      <button data-tab="clock">🕒 ساعت</button>
+    </nav>
+  </header>
+  <main>
+    <section id="calendar" class="tab-content active">
+      <div class="date-display">
+        <div>شمسی: <span id="shamsi"></span></div>
+        <div>میلادی: <span id="miladi"></span></div>
+        <div>قمری: <span id="ghemeri"></span></div>
+      </div>
+      <div id="month-grid" class="month-grid"></div>
+    </section>
+    <section id="clock" class="tab-content">
+      <div class="clocks">
+        <div class="clock-card">
+          <h3>تهران</h3>
+          <div id="time-IR" class="time-display"></div>
+        </div>
+        <div class="clock-card">
+          <h3>لندن</h3>
+          <div id="time-UK" class="time-display"></div>
+        </div>
+        <div class="clock-card">
+          <h3>توکیو</h3>
+          <div id="time-JP" class="time-display"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    این وب‌سایت بر اثر تلاش‌های  
+    <strong>محمد سلیمانی اهل قم</strong>  
+    به وجود آمده
+  </footer>
 
-
+  <!-- کتابخانه‌ی تبدیل شمسی -->
+  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/index.min.js"></script>
+  <!-- اسکریپت ما -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
