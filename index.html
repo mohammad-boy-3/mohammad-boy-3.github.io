@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تقویم و ساعت فانتزی</title>
+  <title>تقویم و ساعت</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.gif" type="image/gif">
   <style>
     * {
       box-sizing: border-box;
@@ -13,7 +14,7 @@
     }
     body {
       margin: 0;
-      background: url('https://cdn.pixabay.com/photo/2020/09/07/11/54/bench-5551456_1280.jpg') no-repeat center center fixed;
+      background: url('https://cdn.pixabay.com/photo/2020/09/07/11:54/bench-5551456_1280.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
@@ -62,58 +63,55 @@
   </style>
 </head>
 <body>
-  <header>ساعت و تقویم فانتزی</header>
-
+  <header>وب سایت شیک تقویم و ساعت</header>
   <div class="container">
     <div class="card">
-      <div class="label">زمان فعلی:</div>
+      <div class="label">زمان فعلی ایران:</div>
       <div class="output" id="clock">در حال بارگذاری...</div>
-    </div>
-    <div class="card">
-      <div class="label">تاریخ میلادی:</div>
-      <div class="output" id="gregorian">در حال بارگذاری...</div>
     </div>
     <div class="card">
       <div class="label">تاریخ شمسی:</div>
       <div class="output" id="jalali">در حال بارگذاری...</div>
     </div>
     <div class="card">
-      <div class="label">تاریخ قمری:</div>
-      <div class="output" id="hijri">در حال بارگذاری...</div>
+      <div class="label">تاریخ میلادی:</div>
+      <div class="output" id="gregorian">در حال بارگذاری...</div>
     </div>
   </div>
-
   <footer>
-    طراحی شده با عشق توسط محمد سلیمانی اهل قم
+    ساخته شده توسط محمد سلیمانی از شهر قم
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.1.0/dist/jalaali.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.33/builds/moment-timezone-with-data.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
   <script>
     const clockEl = document.getElementById('clock');
     const gregorianEl = document.getElementById('gregorian');
     const jalaliEl = document.getElementById('jalali');
     const hijriEl = document.getElementById('hijri');
 
+    // تابع تبدیل اعداد انگلیسی به فارسی
+    function toPersianDigits(str) {
+      const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return str.replace(/[0-9]/g, function(w) {
+        return persianDigits[parseInt(w)];
+      });
+    }
+
     function updateDateTime() {
-      const now = new Date();
+      // ساعت لحظه‌ای تهران
+      const tehranTime = moment().tz("Asia/Tehran").format('HH:mm:ss');
+      clockEl.innerText = toPersianDigits(tehranTime);
 
-      // ساعت
-      clockEl.innerText = now.toLocaleTimeString('fa-IR');
-
-      // تاریخ میلادی
-      gregorianEl.innerText = now.toLocaleDateString('fa-IR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
+      // استفاده از persian-date برای تاریخ‌ها
+      const today = new persianDate();
+      
       // تاریخ شمسی
-      const j = window.jalaali.toJalaali(now);
-      const jDate = `${j.jy}/${j.jm.toString().padStart(2, '0')}/${j.jd.toString().padStart(2, '0')}`;
-      jalaliEl.innerText = jDate;
-
-      // تاریخ قمری (تخمینی)
-      hijriEl.innerText = new Intl.DateTimeFormat('fa-TN-u-ca-islamic', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(now);
+      jalaliEl.innerText = today.format('D MMMM YYYY');
+      
+      // تاریخ میلادی
+      gregorianEl.innerText = today.toCalendar('islamic').format('D MMMM YYYY');
     }
 
     updateDateTime();
