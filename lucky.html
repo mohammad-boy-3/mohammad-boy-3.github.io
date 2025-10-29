@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عدد شانس - ژنراتور عدد تصادفی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #0D4F4C 100%);
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-bar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            color: #D4AF37;
+            transform: translateY(-2px);
+        }
+        
+        .lucky-number {
+            font-size: clamp(3rem, 12vw, 6rem);
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.9);
+            animation: luckyGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes luckyGlow {
+            from { 
+                text-shadow: 0 0 40px rgba(212, 175, 55, 0.9);
+                color: #D4AF37;
+            }
+            to { 
+                text-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 215, 0, 0.8);
+                color: #FFD700;
+            }
+        }
+        
+        .lucky-btn {
+            background: linear-gradient(45deg, #D4AF37, #FFD700, #D4AF37);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .lucky-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.6);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .fortune-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(13, 79, 76, 0.1));
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fortune-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .lucky-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="min-h-screen text-white pb-20">
+    <!-- Lucky Effects Background -->
+    <div class="lucky-effects" id="luckyEffects"></div>
+    
+    <!-- Header -->
+    <header class="text-center pt-8 pb-4 px-4">
+        <h1 class="text-3xl font-bold text-gold-400 mb-2 flex items-center justify-center">
+            <span class="ml-2">🍀</span>
+            عدد شانس شما
+        </h1>
+        <p class="text-gray-300 text-sm">کشف عددی که برایتان خوش‌شانسی می‌آورد</p>
+    </header>
+    
+    <!-- Main Lucky Generator -->
+    <main class="px-4 space-y-6">
+        <!-- Lucky Number Display -->
+        <div class="fortune-card rounded-3xl p-8 text-center">
+            <div class="lucky-number font-bold mb-4" id="luckyNumberDisplay">
+                ؟
+            </div>
+            <p class="text-gray-300 text-lg mb-6">
+                عدد شانس شماست
+            </p>
+            
+            <!-- Generate Lucky Number Button -->
+            <button id="generateLuckyBtn" class="lucky-btn w-full py-4 px-8 rounded-2xl text-black font-semibold text-lg mb-6">
+                <span class="flex items-center justify-center">
+                    <span class="ml-2">✨</span>
+                    عدد شانس بساز
+                    <span class="mr-2">🍀</span>
+                </span>
+            </button>
+            
+            <!-- Lucky Fortune -->
+            <div id="fortuneText" class="text-gray-400 text-sm italic opacity-0 transition-opacity duration-1000">
+                <!-- Fortune text will appear here -->
+            </div>
+        </div>
+        
+        <!-- Lucky Number Types -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">🎯</span>
+                انواع اعداد شانس
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="generateSpecificLucky('seven')" class="bg-purple-600 hover:bg-purple-700 p-4 rounded-xl transition-colors">
+                    <div class="text-2xl mb-2">7️⃣</div>
+                    <div class="text-sm">عدد 7</div>
+                </button>
+                <button onclick="generateSpecificLucky('repeated')" class="bg-blue-600 hover:bg-blue-700 p-4 rounded-xl transition-colors">
+                    <div class="text-2xl mb-2">9️⃣</div>
+                    <div class="text-sm">ارقام تکراری</div>
+                </button>
+                <button onclick="generateSpecificLucky('sequential')" class="bg-green-600 hover:bg-green-700 p-4 rounded-xl transition-colors">
+                    <div class="text-2xl mb-2">1️⃣2️⃣3️⃣</div>
+                    <div class="text-sm">پیوسته</div>
+                </button>
+                <button onclick="generateSpecificLucky('palindrome')" class="bg-red-600 hover:bg-red-700 p-4 rounded-xl transition-colors">
+                    <div class="text-2xl mb-2">1️⃣2️⃣1️⃣</div>
+                    <div class="text-sm">Palindrome</div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Lucky History -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📜</span>
+                تاریخچه اعداد شانس
+            </h2>
+            <div id="luckyHistory" class="space-y-2 max-h-48 overflow-y-auto">
+                <!-- Lucky history will be populated here -->
+                <div class="text-center text-gray-400 py-4">
+                    هنوز عدد شانسی تولید نشده است
+                </div>
+            </div>
+        </div>
+        
+        <!-- Share Lucky Number -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📤</span>
+                اشتراک‌گذاری
+            </h2>
+            <button onclick="shareLuckyNumber()" class="bg-teal-600 hover:bg-teal-700 w-full py-3 px-4 rounded-xl text-white font-semibold transition-colors">
+                📱 اشتراک‌گذاری عدد شانس
+            </button>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <nav class="nav-bar fixed bottom-0 left-0 right-0 px-4 py-3">
+        <div class="flex justify-around items-center max-w-md mx-auto">
+            <a href="index.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">🏠</span>
+                <span class="text-xs">خانه</span>
+            </a>
+            <a href="statistics.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">📊</span>
+                <span class="text-xs">آمار</span>
+            </a>
+            <a href="lucky.html" class="nav-item flex flex-col items-center text-gold-400">
+                <span class="text-xl mb-1">🍀</span>
+                <span class="text-xs">شانس</span>
+            </a>
+            <a href="about.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">ℹ️</span>
+                <span class="text-xs">درباره</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script src="main.js"></script>
+    <script>
+        let luckyHistory = JSON.parse(localStorage.getItem('luckyHistory')) || [];
+        let currentLuckyNumber = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLuckyHistory();
+            createSparkles();
+            
+            // Setup lucky button
+            document.getElementById('generateLuckyBtn').addEventListener('click', generateLuckyNumber);
+        });
+        
+        function generateLuckyNumber() {
+            const luckyNumbers = [7, 13, 21, 42, 77, 99, 777, 999, 7777, 9999, 12321, 45654];
+            const randomLucky = luckyNumbers[Math.floor(Math.random() * luckyNumbers.length)];
+            
+            currentLuckyNumber = randomLucky;
+            
+            // Animate the number
+            animateLuckyNumber(randomLucky);
+            
+            // Show fortune
+            showFortune(randomLucky);
+            
+            // Add to history
+            addToLuckyHistory(randomLucky);
+            
+            // Create enhanced effects
+            createEnhancedEffects();
+            
+            // Play special sound
+            playLuckySound();
+        }
+        
+        function animateLuckyNumber(number) {
+            const display = document.getElementById('luckyNumberDisplay');
+            
+            anime({
+                targets: { value: 0 },
+                value: number,
+                duration: 3000,
+                easing: 'easeOutElastic(1, .8)',
+                update: (anim) => {
+                    display.textContent = Math.floor(anim.animatables[0].target.value).toLocaleString('fa-IR');
+                },
+                complete: () => {
+                    display.textContent = number.toLocaleString('fa-IR');
+                    
+                    // Add special effects
+                    anime({
+                        targets: display,
+                        scale: [1, 1.1, 1],
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+            });
+        }
+        
+        function showFortune(number) {
+            const fortunes = {
+                7: "عدد 7: نماد کمال و خوش‌شانسی در فرهنگ‌هاست",
+                13: "عدد 13: برخلاف باورها، برای شما خوش‌شانسی می‌آورد",
+                21: "عدد 21: سن قانونی و آغاز ماجراجویی‌های جدید",
+                42: "عدد 42: پاسخ به همه سوالات جهان!",
+                77: "عدد 77: دو برابر خوش‌شانسی",
+                99: "عدد 99: کاملترین عدد دو رقمی",
+                777: "عدد 777: سه برابر خوش‌شانسی فراوان",
+                999: "عدد 999: پایان یک دوره و آغاز دوره‌ای نو",
+                7777: "عدد 7777: خوش‌شانسی بی‌نهایت",
+                9999: "عدد 9999: کمال مطلق و موفقیت بزرگ",
+                12321: "عدد 12321: نظم و هماهنگی در زندگی",
+                45654: "عدد 45654: تعادل و ثبات در مسیر زندگی"
+            };
+            
+            const fortuneText = document.getElementById('fortuneText');
+            fortuneText.textContent = fortunes[number] || "عدد شانس شما - این عدد برایتان خوش‌شانسی می‌آورد!";
+            
+            anime({
+                targets: fortuneText,
+                opacity: [0, 1],
+                duration: 2000,
+                delay: 1000
+            });
+        }
+        
+        function addToLuckyHistory(number) {
+            luckyHistory.unshift({
+                number: number,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 20 lucky numbers
+            if (luckyHistory.length > 20) {
+                luckyHistory = luckyHistory.slice(0, 20);
+            }
+            
+            localStorage.setItem('luckyHistory', JSON.stringify(luckyHistory));
+            updateLuckyHistory();
+        }
+        
+        function updateLuckyHistory() {
+            const container = document.getElementById('luckyHistory');
+            if (luckyHistory.length === 0) return;
+            
+            const historyHTML = luckyHistory.map((item, index) => `
+                <div class="bg-gray-800 rounded-lg p-3 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-gold-400 text-lg">
+                            ${item.number.toLocaleString('fa-IR')}
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            ${new Date(item.timestamp).toLocaleString('fa-IR')}
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        🍀
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = historyHTML;
+        }
+        
+        function generateSpecificLucky(type) {
+            let number;
+            
+            switch(type) {
+                case 'seven':
+                    number = 7;
+                    break;
+                case 'repeated':
+                    const digits = [9, 8, 7, 6];
+                    const digit = digits[Math.floor(Math.random() * digits.length)];
+                    number = parseInt(digit.toString().repeat(Math.floor(Math.random() * 3) + 2));
+                    break;
+                case 'sequential':
+                    number = Math.floor(Math.random() * 3) + 1;
+                    number = parseInt(number.toString() + (number + 1).toString() + (number + 2).toString());
+                    break;
+                case 'palindrome':
+                    const base = Math.floor(Math.random() * 9) + 1;
+                    const middle = Math.floor(Math.random() * 10);
+                    number = parseInt(base.toString() + middle.toString() + base.toString());
+                    break;
+            }
+            
+            currentLuckyNumber = number;
+            animateLuckyNumber(number);
+            showFortune(number);
+            addToLuckyHistory(number);
+            createEnhancedEffects();
+        }
+        
+        function createSparkles() {
+            const effectsContainer = document.getElementById('luckyEffects');
+            
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                effectsContainer.appendChild(sparkle);
+            }
+        }
+        
+        function createEnhancedEffects() {
+            // Create additional sparkles
+            createSparkles();
+            
+            // Flash effect
+            const body = document.body;
+            body.style.background = 'linear-gradient(135deg, #D4AF37 0%, #0D4F4C 100%)';
+            setTimeout(() => {
+                body.style.background = 'linear-gradient(135deg, #1A1A1A 0%, #0D4F4C 100%)';
+            }, 500);
+        }
+        
+        function playLuckySound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a more pleasant lucky sound
+                const frequencies = [523, 659, 784, 1047]; // C, E, G, C (major chord)
+                
+                frequencies.forEach((freq, index) => {
+                    setTimeout(() => {
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        
+                        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                        
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                    }, index * 100);
+                });
+            } catch (error) {
+                console.log('Audio not supported');
+            }
+        }
+        
+        function shareLuckyNumber() {
+            if (!currentLuckyNumber) {
+                alert('لطفاً اول یک عدد شانس تولید کنید!');
+                return;
+            }
+            
+            const shareText = `عدد شانس من: ${currentLuckyNumber.toLocaleString('fa-IR')} 🍀✨`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'عدد شانس من',
+                    text: shareText
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    const message = document.createElement('div');
+                    message.textContent = 'عدد شانس در کلیپ‌بورد کپی شد!';
+                    message.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-teal-600 text-white px-4 py-2 rounded-lg z-50';
+                    document.body.appendChild(message);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(message);
+                    }, 3000);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
