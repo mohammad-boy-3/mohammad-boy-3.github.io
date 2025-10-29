@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آمار و تاریخچه - ژنراتور عدد تصادفی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #0D4F4C 100%);
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-bar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            color: #D4AF37;
+            transform: translateY(-2px);
+        }
+        
+        .history-item {
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
+        }
+        
+        .history-item:hover {
+            border-right-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(13, 79, 76, 0.3), rgba(212, 175, 55, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .clear-btn {
+            background: linear-gradient(45deg, #dc2626, #ef4444);
+            transition: all 0.3s ease;
+        }
+        
+        .clear-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="min-h-screen text-white pb-20">
+    <!-- Header -->
+    <header class="text-center pt-8 pb-4 px-4">
+        <h1 class="text-3xl font-bold text-gold-400 mb-2">آمار و تاریخچه</h1>
+        <p class="text-gray-300 text-sm">تحلیل کامل اعداد تولید شده</p>
+    </header>
+    
+    <!-- Statistics Dashboard -->
+    <main class="px-4 space-y-6">
+        <!-- Overall Statistics -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📊</span>
+                آمار کلی
+            </h2>
+            <div id="statisticsContainer">
+                <!-- Statistics will be populated by JavaScript -->
+                <div class="text-center text-gray-400 py-8">
+                    هنوز عددی تولید نشده است
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">⚡</span>
+                عملیات سریع
+            </h2>
+            <div class="space-y-3">
+                <button id="clearHistory" class="clear-btn w-full py-3 px-4 rounded-xl text-white font-semibold">
+                    🗑️ پاک کردن تاریخچه
+                </button>
+                <button onclick="exportHistory()" class="bg-teal-600 w-full py-3 px-4 rounded-xl text-white font-semibold hover:bg-teal-700 transition-colors">
+                    📤 خروجی گرفتن از تاریخچه
+                </button>
+            </div>
+        </div>
+        
+        <!-- Number History -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📝</span>
+                تاریخچه اعداد
+            </h2>
+            <div id="historyContainer" class="space-y-2 max-h-96 overflow-y-auto">
+                <!-- History items will be populated by JavaScript -->
+                <div class="text-center text-gray-400 py-8">
+                    هنوز عددی تولید نشده است
+                </div>
+            </div>
+        </div>
+        
+        <!-- Frequency Analysis -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📈</span>
+                تحلیل فراوانی
+            </h2>
+            <div id="frequencyAnalysis">
+                <!-- Frequency analysis will be populated by JavaScript -->
+                <div class="text-center text-gray-400 py-4">
+                    با تولید اعداد بیشتر، تحلیل فراوانی نمایش داده خواهد شد
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <nav class="nav-bar fixed bottom-0 left-0 right-0 px-4 py-3">
+        <div class="flex justify-around items-center max-w-md mx-auto">
+            <a href="index.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">🏠</span>
+                <span class="text-xs">خانه</span>
+            </a>
+            <a href="statistics.html" class="nav-item flex flex-col items-center text-gold-400">
+                <span class="text-xl mb-1">📊</span>
+                <span class="text-xs">آمار</span>
+            </a>
+            <a href="lucky.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">🍀</span>
+                <span class="text-xs">شانس</span>
+            </a>
+            <a href="about.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">ℹ️</span>
+                <span class="text-xs">درباره</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatisticsDisplay();
+            updateHistoryDisplay();
+            updateFrequencyAnalysis();
+        });
+        
+        function updateStatisticsDisplay() {
+            const app = window.randomNumberApp;
+            if (!app || app.history.length === 0) return;
+            
+            const container = document.getElementById('statisticsContainer');
+            const numbers = app.history.map(item => item.number);
+            const avg = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+            const min = Math.min(...numbers);
+            const max = Math.max(...numbers);
+            const median = calculateMedian(numbers);
+            
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-gold-400">${numbers.length}</div>
+                        <div class="text-xs text-gray-400">تعداد کل</div>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-teal-400">${Math.round(avg).toLocaleString('fa-IR')}</div>
+                        <div class="text-xs text-gray-400">میانگین</div>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-green-400">${min.toLocaleString('fa-IR')}</div>
+                        <div class="text-xs text-gray-400">کوچکترین</div>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <div class="text-2xl font-bold text-purple-400">${max.toLocaleString('fa-IR')}</div>
+                        <div class="text-xs text-gray-400">بزرگترین</div>
+                    </div>
+                </div>
+                <div class="mt-4 stat-card rounded-xl p-4 text-center">
+                    <div class="text-lg font-bold text-blue-400">${Math.round(median).toLocaleString('fa-IR')}</div>
+                    <div class="text-xs text-gray-400">میانه</div>
+                </div>
+            `;
+        }
+        
+        function updateHistoryDisplay() {
+            const app = window.randomNumberApp;
+            if (!app || app.history.length === 0) return;
+            
+            const container = document.getElementById('historyContainer');
+            const historyHTML = app.history.map((item, index) => `
+                <div class="history-item bg-gray-800 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-gold-400 text-lg">
+                            ${item.number.toLocaleString('fa-IR')}
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            ${new Date(item.timestamp).toLocaleString('fa-IR')}
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        #${(index + 1).toLocaleString('fa-IR')}
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = historyHTML;
+        }
+        
+        function updateFrequencyAnalysis() {
+            const app = window.randomNumberApp;
+            if (!app || app.history.length < 5) return;
+            
+            const container = document.getElementById('frequencyAnalysis');
+            const numbers = app.history.map(item => item.number);
+            
+            // Simple frequency analysis
+            const ranges = [
+                { name: 'کوچک (1-100)', min: 1, max: 100, color: 'bg-green-500' },
+                { name: 'متوسط (101-10000)', min: 101, max: 10000, color: 'bg-blue-500' },
+                { name: 'بزرگ (10001-1000000)', min: 10001, max: 1000000, color: 'bg-purple-500' },
+                { name: 'خیلی بزرگ (1000001+)', min: 1000001, max: Infinity, color: 'bg-red-500' }
+            ];
+            
+            const analysis = ranges.map(range => {
+                const count = numbers.filter(num => num >= range.min && num <= range.max).length;
+                const percentage = (count / numbers.length) * 100;
+                return { ...range, count, percentage };
+            });
+            
+            const analysisHTML = analysis.map(item => `
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm text-gray-300">${item.name}</span>
+                    <div class="flex items-center">
+                        <div class="w-20 h-3 bg-gray-700 rounded-full mr-2 overflow-hidden">
+                            <div class="${item.color} h-full rounded-full transition-all duration-1000" 
+                                 style="width: ${item.percentage}%"></div>
+                        </div>
+                        <span class="text-xs text-gray-400 w-8">${Math.round(item.percentage)}%</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = analysisHTML;
+        }
+        
+        function calculateMedian(numbers) {
+            const sorted = [...numbers].sort((a, b) => a - b);
+            const middle = Math.floor(sorted.length / 2);
+            
+            if (sorted.length % 2 === 0) {
+                return (sorted[middle - 1] + sorted[middle]) / 2;
+            } else {
+                return sorted[middle];
+            }
+        }
+        
+        function exportHistory() {
+            const app = window.randomNumberApp;
+            if (!app || app.history.length === 0) {
+                alert('تاریخچه‌ای برای خروجی گرفتن وجود ندارد!');
+                return;
+            }
+            
+            const csvContent = "data:text/csv;charset=utf-8," + 
+                "\uFEFF" + // BOM for Persian characters
+                "شماره,عدد,تاریخ\n" +
+                app.history.map((item, index) => 
+                    `${index + 1},${item.number},${new Date(item.timestamp).toLocaleString('fa-IR')}`
+                ).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "number_history.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message
+            const message = document.createElement('div');
+            message.textContent = 'فایل خروجی با موفقیت دانلود شد!';
+            message.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded-lg z-50';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
