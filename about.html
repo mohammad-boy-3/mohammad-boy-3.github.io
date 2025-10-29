@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره برنامه - ژنراتور عدد تصادفی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #0D4F4C 100%);
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-bar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            color: #D4AF37;
+            transform: translateY(-2px);
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(13, 79, 76, 0.3), rgba(212, 175, 55, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(45deg, #0D4F4C, #D4AF37);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="min-h-screen text-white pb-20">
+    <!-- Header -->
+    <header class="text-center pt-8 pb-4 px-4">
+        <div class="floating-animation">
+            <h1 class="text-3xl font-bold text-gold-400 mb-2">درباره برنامه</h1>
+            <p class="text-gray-300 text-sm">ژنراتور عدد تصادفی با جلوه‌های بصری جادویی</p>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="px-4 space-y-6">
+        <!-- App Description -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">✨</span>
+                معرفی برنامه
+            </h2>
+            <p class="text-gray-300 leading-relaxed mb-4">
+                ژنراتور عدد تصادفی یک برنامه جذاب و کاربردی است که تجربه‌ای متفاوت از تولید اعداد تصادفی را برای شما فراهم می‌کند. با استفاده از جلوه‌های بصری خیره‌کننده و انیمیشن‌های پیشرفته، هر بار که عددی تولید می‌کنید، یک تجربه بصری منحصر به فرد خواهید داشت.
+            </p>
+            <p class="text-gray-300 leading-relaxed">
+                این برنامه با الهام از هنر و معماری ایرانی طراحی شده و فضایی مرموز و جادویی را برای کاربران ایجاد می‌کند. اعداد به صورت زنده و با انیمیشن‌های خاص نمایش داده می‌شوند و سیستم ذرات سه‌بعدی فضایی جادویی را به وجود می‌آورد.
+            </p>
+        </div>
+        
+        <!-- Features -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">🎯</span>
+                ویژگی‌های برنامه
+            </h2>
+            <div class="space-y-4">
+                <div class="feature-card rounded-xl p-4">
+                    <h3 class="font-semibold text-gold-400 mb-2 flex items-center">
+                        <span class="ml-2">🎲</span>
+                        تولید اعداد تصادفی
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        تولید اعداد تصادفی در بازه دلخواه از 1 تا 100,000,000,000 با الگوریتم پیشرفته
+                    </p>
+                </div>
+                
+                <div class="feature-card rounded-xl p-4">
+                    <h3 class="font-semibold text-gold-400 mb-2 flex items-center">
+                        <span class="ml-2">✨</span>
+                        جلوه‌های بصری
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        انیمیشن‌های خیره‌کننده، سیستم ذرات سه‌بعدی و افکت‌های نورپردازی پیشرفته
+                    </p>
+                </div>
+                
+                <div class="feature-card rounded-xl p-4">
+                    <h3 class="font-semibold text-gold-400 mb-2 flex items-center">
+                        <span class="ml-2">📊</span>
+                        آمار و تحلیل
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        نمایش آمار کامل، تاریخچه اعداد، تحلیل فراوانی و نمودارهای تعاملی
+                    </p>
+                </div>
+                
+                <div class="feature-card rounded-xl p-4">
+                    <h3 class="font-semibold text-gold-400 mb-2 flex items-center">
+                        <span class="ml-2">🍀</span>
+                        اعداد شانس
+                    </h3>
+                    <p class="text-gray-300 text-sm">
+                        حالت خاص برای تولید اعداد شانس با افکت‌های ویژه و پیش‌بینی‌های جالب
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technology Stack -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">⚙️</span>
+                فناوری‌های استفاده شده
+            </h2>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3</span>
+                <span class="tech-badge">JavaScript ES6+</span>
+                <span class="tech-badge">Anime.js</span>
+                <span class="tech-badge">Tailwind CSS</span>
+                <span class="tech-badge">Canvas API</span>
+                <span class="tech-badge">Web Audio API</span>
+            </div>
+            <p class="text-gray-300 text-sm">
+                این برنامه با استفاده از جدیدترین فناوری‌های وب ساخته شده و بهینه‌سازی کامل برای دستگاه‌های موبایل دارد. 
+                سیستم ذرات با استفاده از Canvas API پیاده‌سازی شده و انیمیشن‌ها با کتابخانه Anime.js اجرا می‌شوند.
+            </p>
+        </div>
+        
+        <!-- How to Use -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📖</span>
+                نحوه استفاده
+            </h2>
+            <div class="space-y-3 text-gray-300 text-sm">
+                <div class="flex items-start">
+                    <span class="text-gold-400 ml-2">1.</span>
+                    <span>بازه مورد نظر برای تولید اعداد را تنظیم کنید (حداقل و حداکثر)</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-gold-400 ml-2">2.</span>
+                    <span>دکمه "تولید عدد تصادفی" را فشار دهید و از تماشای انیمیشن لذت ببرید</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-gold-400 ml-2">3.</span>
+                    <span>آمار و تاریخچه اعداد را در صفحه آمار مشاهده کنید</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-gold-400 ml-2">4.</span>
+                    <span>برای تجربه‌ای متفاوت، به صفحه "عدد شانس" بروید</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-gold-400 ml-2">5.</span>
+                    <span>تنظیمات مورد نظر خود را در هر صفحه تنظیم کنید</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="glass-card rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-teal-400 mb-4 flex items-center">
+                <span class="ml-2">📞</span>
+                اطلاعات تماس
+            </h2>
+            <p class="text-gray-300 text-sm mb-4">
+                اگر پیشنهاد، انتقاد یا سوالی دارید، خوشحال می‌شویم از شما بشنویم!
+            </p>
+            <div class="space-y-2 text-sm">
+                <div class="flex items-center">
+                    <span class="text-gold-400 ml-2">📧</span>
+                    <span class="text-gray-300">feedback@randomgenerator.app</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-gold-400 ml-2">🌐</span>
+                    <span class="text-gray-300">www.randomgenerator.app</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-gold-400 ml-2">📱</span>
+                    <span class="text-gray-300">نسخه 1.0.0 - بهینه برای موبایل</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="text-center text-gray-500 text-xs py-4">
+            <p>© 2024 ژنراتور عدد تصادفی. تمامی حقوق محفوظ است.</p>
+            <p class="mt-1">طراحی شده با ❤️ برای تجربه‌ای متفاوت</p>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <nav class="nav-bar fixed bottom-0 left-0 right-0 px-4 py-3">
+        <div class="flex justify-around items-center max-w-md mx-auto">
+            <a href="index.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">🏠</span>
+                <span class="text-xs">خانه</span>
+            </a>
+            <a href="statistics.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">📊</span>
+                <span class="text-xs">آمار</span>
+            </a>
+            <a href="lucky.html" class="nav-item flex flex-col items-center text-gray-400">
+                <span class="text-xl mb-1">🍀</span>
+                <span class="text-xs">شانس</span>
+            </a>
+            <a href="about.html" class="nav-item flex flex-col items-center text-gold-400">
+                <span class="text-xl mb-1">ℹ️</span>
+                <span class="text-xs">درباره</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add entrance animations
+            anime({
+                targets: '.glass-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: anime.stagger(200),
+                easing: 'easeOutQuad'
+            });
+            
+            // Add hover animations for feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    anime({
+                        targets: card,
+                        scale: 1.02,
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    anime({
+                        targets: card,
+                        scale: 1,
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
